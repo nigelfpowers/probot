@@ -3,9 +3,9 @@ export function importView({
   GH_HOST,
   WEBHOOK_PROXY_URL = "",
 }: {
-  name?: string;
-  GH_HOST: string;
-  WEBHOOK_PROXY_URL?: string;
+  name?: string | undefined;
+  GH_HOST: string | undefined;
+  WEBHOOK_PROXY_URL?: string | undefined;
 }): string {
   return `<!DOCTYPE html>
 <html lang="en" class="height-full" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
@@ -15,7 +15,7 @@ export function importView({
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Import ${name || "Your App"} | built with Probot</title>
-    <link rel="icon" href="/probot/static/probot-head.png">
+    <link rel="icon" href="/probot/static/probot-head.svg">
     <link rel="stylesheet" href="/probot/static/primer.css">
 </head>
 

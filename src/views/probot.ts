@@ -3,9 +3,9 @@ export function probotView({
   description,
   version,
 }: {
-  name?: string;
-  description?: string;
-  version?: string;
+  name?: string | undefined;
+  description?: string | undefined;
+  version?: string | undefined;
 }): string {
   return `<!DOCTYPE html>
 <html lang="en" class="height-full" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
@@ -14,7 +14,7 @@ export function probotView({
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>${name || "Your App"} | built with Probot</title>
-    <link rel="icon" href="/probot/static/probot-head.png">
+    <link rel="icon" href="/probot/static/probot-head.svg">
     <link rel="stylesheet" href="/probot/static/primer.css">
   </head>
   <body class="height-full bg-gray-light">
