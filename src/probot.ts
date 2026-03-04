@@ -310,6 +310,15 @@ export class Probot {
     return this;
   }
 
+  public async recover(): Promise<void> {
+    if (this.#state.initializationState === INITIALIZED) {
+      return;
+    }
+    this.#state.initializationState = UNINITIALIZED;
+    this.#state.initializedPromise = createDeferredPromise<void>();
+    await this.#initialize();
+  }
+
   public async receive(event: WebhookEvent): Promise<void> {
     await this.#state.initializedPromise.promise;
 

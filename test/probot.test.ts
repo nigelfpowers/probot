@@ -772,4 +772,41 @@ describe("Probot", () => {
       );
     });
   });
+
+  describe("recover", () => {
+    it("allows re-initialization after a failed initialization", async () => {
+      let constructorCallCount = 0;
+
+      class FailOnFirstConstruct extends ProbotOctokit {
+        constructor(options?: ConstructorParameters<typeof ProbotOctokit>[0]) {
+          super(options);
+          constructorCallCount++;
+          if (constructorCallCount === 1) {
+            throw new Error("Simulated initialization failure");
+          }
+        }
+      }
+
+      const probot = new Probot({
+        appId,
+        privateKey,
+        Octokit: FailOnFirstConstruct,
+      });
+
+      let firstError: Error | undefined;
+      try {
+        await probot.auth();
+      } catch (e) {
+        firstError = e as Error;
+      }
+
+      expect(firstError).toBeDefined();
+      expect(firstError?.message).toContain("Simulated initialization failure");
+
+      await probot.recover();
+
+      const octokit = await probot.auth();
+      expect(octokit).toBeDefined();
+    });
+  });
 });
